@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Latest Interiors — Luxury Interior Architecture &amp; Turnkey Design | Delhi NCR</title>
+  <meta name="description" content="Latest Interiors crafts bespoke luxury residential, workspace, clinical, and hospitality interiors across New Delhi, Gurugram, and Noida." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="is-loading">
+
+  <!-- STAGE 1: ARCHITECTURAL CURTAIN PRELOADER -->
+  <div id="preloader" class="preloader" aria-label="Loading Latest Interiors">
+    <div class="preloader__inner">
+      <div class="preloader__brand">
+        <img id="preloader-logo" src="assets/logo_env.webp" alt="LI Monogram" class="preloader__logo" />
+        <span class="preloader__label">LATEST INTERIORS</span>
+      </div>
+      <div class="preloader__progress-wrap">
+        <div class="preloader__track">
+          <div id="preloader-fill" class="preloader__fill"></div>
+        </div>
+        <div class="preloader__meta">
+          <span class="preloader__city">DELHI NCR</span>
+          <span id="preloader-percent" class="preloader__percent">00%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header id="site-header" class="site-header">
+    <div class="container site-header__inner">
+      <a href="#hero" class="site-header__logo-link" aria-label="Latest Interiors Home">
+        <img id="header-logo" src="assets/logo_env.webp" alt="Latest Interiors Monogram" class="site-header__logo" />
+      </a>
+      <nav class="site-header__nav" aria-label="Primary Navigation">
+        <a href="#featured-works" class="nav-link" data-scroll-to="#featured-works">Works</a>
+        <a href="#studio-offices" class="nav-link" data-scroll-to="#studio-offices">Studio</a>
+        <a href="#contact" class="nav-link" data-scroll-to="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN STAGE -->
+  <main id="main-stage" class="main-stage">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+      <div class="hero__copy">
+        <p class="hero__eyebrow">DELHI NCR &middot; ARCHITECTURE &amp; TURNKEY INTERIORS</p>
+        <h1 class="hero__title">
+          Spaces shaped by <em class="serif-accent">quiet</em> precision.
+        </h1>
+        <p class="hero__subtitle">
+          Bespoke residential, workspace, and clinical environments engineered from architectural concept to turnkey handover across New Delhi, Gurugram, and Noida.
+        </p>
+      </div>
+
+      <div class="hero__stage" aria-hidden="true">
+        <div class="hero__layer hero__layer--bg" data-parallax-layer="bg">
+          <img id="hero-img-bg" src="assets/hero-bg.webp" alt="" />
+        </div>
+        <div class="hero__layer hero__layer--mid" data-parallax-layer="mid">
+          <img id="hero-img-mid" src="assets/hero-mid.webp" alt="" />
+        </div>
+        <div class="hero__layer hero__layer--fg" data-parallax-layer="fg">
+          <img id="hero-img-fg" src="assets/hero-fg.webp" alt="" />
+        </div>
+      </div>
+
+      <div class="hero__scroll-cue" aria-hidden="true">
+        <span class="hero__scroll-label">Scroll to explore</span>
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS: PINNED HORIZONTAL STACKING -->
+    <section id="featured-works" class="featured-runway" aria-label="Featured Projects">
+      <div class="featured-stage">
+        <div class="container featured-stage__shell">
+          <div class="featured-header">
+            <div class="featured-header__left">
+              <h2 class="featured-header__title">Featured Projects</h2>
+              <span id="featured-counter" class="featured-header__counter" aria-live="polite">01 / 04</span>
+            </div>
+            <button id="open-all-projects-btn" class="btn-outline" type="button">
+              <span>All Projects</span>
+              <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+
+          <div id="stack-deck" class="stack-deck"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+      <div class="container contact-grid">
+        <div class="contact-left">
+          <p class="eyebrow">START A CONVERSATION</p>
+          <h2 class="contact-heading">
+            Begin your <em class="serif-accent">spatial</em> commission.
+          </h2>
+
+          <div class="contact-concierge">
+            <a href="https://wa.me/919911471712" target="_blank" rel="noopener noreferrer" class="concierge-pill">
+              <span class="concierge-pill__dot" aria-hidden="true"></span>
+              <span>Call or WhatsApp +91 9911471712</span>
+            </a>
+            <div class="concierge-links">
+              <a href="tel:+919958054568" class="text-link">+91 9958054568</a>
+              <span class="concierge-sep" aria-hidden="true">&middot;</span>
+              <a href="mailto:info@latestinteriors.com" class="text-link">info@latestinteriors.com</a>
+            </div>
+          </div>
+
+          <form id="inquiry-form" class="inquiry-form" novalidate>
+            <p class="form-legend"><span class="req-star">*</span> indicates required field</p>
+
+            <div class="form-group">
+              <label class="form-label" for="first-name">Name <span class="req-star">*</span></label>
+              <div class="form-split">
+                <div class="field-wrap">
+                  <input type="text" id="first-name" name="firstName" class="form-input" placeholder="First" autocomplete="given-name" required />
+                  <span class="field-focus-line"></span>
+                </div>
+                <div class="field-wrap">
+                  <input type="text" id="last-name" name="lastName" class="form-input" placeholder="Last" autocomplete="family-name" required />
+                  <span class="field-focus-line"></span>
+                </div>
+              </div>
+              <p class="field-error" id="err-name" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email <span class="req-star">*</span></label>
+              <div class="field-wrap">
+                <input type="email" id="email" name="email" class="form-input" placeholder="name@domain.com" autocomplete="email" required />
+                <span class="field-focus-line"></span>
+              </div>
+              <p class="field-error" id="err-email" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Numbers <span class="req-star">*</span></label>
+              <div class="field-wrap">
+                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 99114 71712" autocomplete="tel" required />
+                <span class="field-focus-line"></span>
+              </div>
+              <p class="field-error" id="err-phone" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" id="project-label">Project <span class="req-star">*</span></label>
+              <div class="custom-select" id="project-select">
+                <input type="hidden" id="project-value" name="project" value="" required />
+                <button
+                  type="button"
+                  id="project-trigger"
+                  class="custom-select__trigger"
+                  aria-haspopup="listbox"
+                  aria-expanded="false"
+                  aria-labelledby="project-label project-trigger-text"
+                >
+                  <span id="project-trigger-text" class="custom-select__placeholder">Select project typology</span>
+                  <svg class="custom-select__chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M3 5.25L7 9.25L11 5.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" />
+                  </svg>
+                </button>
+                <ul class="custom-select__menu" id="project-menu" role="listbox" tabindex="-1" data-lenis-prevent>
+                  <li class="custom-select__option" role="option" data-value="Apartment interiors" tabindex="-1">Apartment interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Builder floor interiors" tabindex="-1">Builder floor interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Villa interiors" tabindex="-1">Villa interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Office interiors" tabindex="-1">Office interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Clinic interiors" tabindex="-1">Clinic interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Salon Interiors" tabindex="-1">Salon Interiors</li>
+                  <li class="custom-select__option" role="option" data-value="Others" tabindex="-1">Others</li>
+                </ul>
+              </div>
+              <p class="field-error" id="err-project" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="location">Location <span class="req-star">*</span></label>
+              <div class="field-wrap">
+                <input type="text" id="location" name="location" class="form-input" placeholder="e.g., South Delhi, Gurugram, Noida" required />
+                <span class="field-focus-line"></span>
+              </div>
+              <p class="field-error" id="err-location" role="alert"></p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="information">Information</label>
+              <div class="field-wrap">
+                <textarea id="information" name="information" class="form-input form-textarea" rows="3" placeholder="Share your approximate area (Sq. Ft. / Sq. Yd.), timeline, or architectural brief."></textarea>
+                <span class="field-focus-line"></span>
+              </div>
+            </div>
+
+            <button type="submit" id="submit-btn" class="btn-primary">
+              <span id="submit-btn-label">Request Consultation</span>
+              <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+          </form>
+
+          <div id="form-success" class="form-success" hidden>
+            <div class="form-success__badge">INQUIRY LOGGED</div>
+            <h3 class="form-success__title">Commission Inquiry Received</h3>
+            <p class="form-success__copy">
+              Our senior architectural desk will connect within 24 hours. For immediate scheduling, reach us directly on WhatsApp.
+            </p>
+            <div class="form-success__actions">
+              <a id="whatsapp-handoff" href="https://wa.me/919911471712" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <span>Chat on WhatsApp (+91 9911471712)</span>
+                <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+              <button type="button" id="reset-form-btn" class="btn-outline">Send another inquiry</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-right">
+          <div class="studio-showcase">
+            <img id="studio-showcase-img" src="assets/studio-showcase.webp" alt="Latest Interiors Materiality &amp; Studio Showcase" class="studio-showcase__img" />
+            <div class="studio-showcase__caption">
+              <span class="studio-showcase__eyebrow">STUDIO &middot; TURNKEY DESIGN</span>
+              <p class="studio-showcase__title">Delhi NCR &mdash; Residential &amp; Commercial</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="studio-offices" class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-directory">
+          <div class="footer-col">
+            <div class="office-block">
+              <h3 class="office-title">Head Quarter &mdash; Delhi</h3>
+              <a href="https://share.google/SrGQt821iyXXKje32" target="_blank" rel="noopener noreferrer" class="office-link">
+                <span>Ground Floor, Rajouri Garden, A2/113, Block A, Rajouri Garden, Delhi, 110027</span>
+                <span class="ext-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+            <div class="office-block office-block--desk">
+              <h3 class="office-title">Direct Desk</h3>
+              <div class="desk-links">
+                <a href="tel:+919911471712" class="text-link">+91 9911471712 (Call / WhatsApp)</a>
+                <a href="tel:+919958054568" class="text-link">+91 9958054568</a>
+                <a href="mailto:info@latestinteriors.com" class="text-link">info@latestinteriors.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <div class="office-block">
+              <h3 class="office-title">Corporate Office &mdash; Noida (Sec 78)</h3>
+              <a href="https://share.google/ruHfI3PDDW5HZzhcF" target="_blank" rel="noopener noreferrer" class="office-link">
+                <span>Mahagun Mezzaria Rd, Sector 78, Noida, Uttar Pradesh 201305</span>
+                <span class="ext-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+            <div class="office-block">
+              <h3 class="office-title">Corporate Office &mdash; Noida (Sec 90)</h3>
+              <a href="https://share.google/L7VEXF43OLvbs7M6Q" target="_blank" rel="noopener noreferrer" class="office-link">
+                <span>Bhutani Alphathum, Sector 90, Noida, Uttar Pradesh 201304</span>
+                <span class="ext-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <div class="office-block">
+              <h3 class="office-title">Corporate Office &mdash; Gurugram</h3>
+              <a href="https://share.google/LUiGqUIrVpbaxovYY" target="_blank" rel="noopener noreferrer" class="office-link">
+                <span>Sector 26A, Gurugram, Haryana 122002</span>
+                <span class="ext-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+            <div class="office-block">
+              <h3 class="office-title">Corporate Office &mdash; South Delhi</h3>
+              <a href="https://share.google/cOIwWkCQo6ZXj02iL" target="_blank" rel="noopener noreferrer" class="office-link">
+                <span>Freedom Fighter Enclave, Sainik Farm, South Delhi, 110068</span>
+                <span class="ext-arrow" aria-hidden="true">&#8599;</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-socials" aria-label="Social Media Channels">
+          <h3 class="office-title">Connect</h3>
+          <ul class="social-stack">
+            <li><a href="https://www.instagram.com/latest_interiors/" target="_blank" rel="noopener noreferrer" class="social-row"><span>Instagram</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+            <li><a href="https://www.linkedin.com/company/latestinteriors/" target="_blank" rel="noopener noreferrer" class="social-row"><span>LinkedIn</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+            <li><a href="https://www.behance.net/latestinterior" target="_blank" rel="noopener noreferrer" class="social-row"><span>Behance</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+            <li><a href="https://www.youtube.com/@latest_interiors" target="_blank" rel="noopener noreferrer" class="social-row"><span>YouTube</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+            <li><a href="https://www.facebook.com/latestinteriorsofficial/" target="_blank" rel="noopener noreferrer" class="social-row"><span>Facebook</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+            <li><a href="https://in.pinterest.com/latestinteriorss/" target="_blank" rel="noopener noreferrer" class="social-row"><span>Pinterest</span><span class="social-arrow" aria-hidden="true">&#8599;</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-bottom__brand">
+          <img id="footer-logo" src="assets/logo_env.webp" alt="Latest Interiors Monogram" class="footer-logo" />
+          <span class="footer-copy">&copy; 2026 Latest Interiors. All rights reserved.</span>
+        </div>
+        <span class="footer-loc">Architectural &amp; Turnkey Interior Design &middot; Delhi NCR, India</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- OVERLAY 1: ALL PROJECTS CATALOG (data-lenis-prevent enables native scroll) -->
+  <section id="all-projects-view" class="overlay-view overlay-catalog" aria-hidden="true" aria-label="All Projects Portfolio" data-lenis-prevent>
+    <div class="overlay-bar">
+      <div class="container overlay-bar__inner">
+        <button type="button" id="catalog-back-btn" class="back-btn">
+          <span aria-hidden="true">&larr;</span>
+          <span>Back</span>
+          <kbd class="esc-kbd">ESC</kbd>
+        </button>
+        <span class="overlay-bar__title">Selected Works</span>
+        <span id="catalog-count" class="overlay-bar__count">07 Projects</span>
+      </div>
+    </div>
+
+    <div class="container catalog-body">
+      <header class="catalog-header">
+        <p class="eyebrow">PORTFOLIO ARCHIVE</p>
+        <h2 class="catalog-heading">Selected Works</h2>
+      </header>
+
+      <div id="filter-bar" class="filter-bar" role="tablist" aria-label="Filter projects by category"></div>
+      <div id="catalog-grid" class="catalog-grid"></div>
+    </div>
+  </section>
+
+  <!-- OVERLAY 2: PROJECT DETAIL VIEW (data-lenis-prevent enables native scroll) -->
+  <article id="project-detail-view" class="overlay-view overlay-detail" aria-hidden="true" aria-label="Project Case Study" data-lenis-prevent>
+    <div class="overlay-bar">
+      <div class="container overlay-bar__inner">
+        <button type="button" id="detail-back-btn" class="back-btn">
+          <span aria-hidden="true">&larr;</span>
+          <span>Back</span>
+          <kbd class="esc-kbd">ESC</kbd>
+        </button>
+        <span id="detail-bar-title" class="overlay-bar__title"></span>
+        <button type="button" id="detail-enquire-btn" class="text-link detail-enquire-btn">Enquire Similar &rarr;</button>
+      </div>
+    </div>
+
+    <div class="container detail-body">
+      <div id="detail-hero-media" class="detail-hero-media">
+        <img id="detail-hero-img" src="" alt="" />
+      </div>
+
+      <div id="detail-content" class="detail-content">
+        <header class="detail-header">
+          <div class="detail-title-row">
+            <span id="detail-index" class="detail-index">01</span>
+            <div>
+              <p id="detail-eyebrow" class="eyebrow"></p>
+              <h1 id="detail-title" class="detail-title"></h1>
+            </div>
+          </div>
+          <p id="detail-narrative" class="detail-narrative"></p>
+        </header>
+
+        <dl class="detail-specs">
+          <div class="spec-item"><dt>AREA</dt><dd id="spec-area"></dd></div>
+          <div class="spec-item"><dt>LOCATION</dt><dd id="spec-location"></dd></div>
+          <div class="spec-item"><dt>TYPOLOGY</dt><dd id="spec-typology"></dd></div>
+          <div class="spec-item"><dt>KEY ELEMENTS</dt><dd id="spec-elements"></dd></div>
+        </dl>
+
+        <div id="detail-gallery" class="detail-gallery"></div>
+
+        <footer class="detail-footer">
+          <button type="button" id="detail-footer-back" class="btn-outline">&larr; Back to Projects</button>
+          <button type="button" id="detail-next-btn" class="btn-primary">
+            <span id="detail-next-label">Next Project</span>
+            <span class="btn-arrow" aria-hidden="true">&rarr;</span>
+          </button>
+        </footer>
+      </div>
+    </div>
+  </article>
+
+  <!-- DEDICATED GPU FLIP FLIGHT PROXY -->
+  <div id="flip-proxy" class="flip-proxy" aria-hidden="true">
+    <img id="flip-proxy-img" src="" alt="" />
+  </div>
+
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
