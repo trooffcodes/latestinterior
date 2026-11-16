@@ -8,7 +8,7 @@
   const ASSET_BASE = 'assets/';
 
   /* ------------------------------------------------------------------------
-     1. PROJECT CATALOG SCHEMA
+     1. PROJECT CATALOG SCHEMA (4 FEATURED + 3 CATALOG = ALL 9 FILTERS)
      ------------------------------------------------------------------------ */
   const FILTER_CATEGORIES = [
     'All',
@@ -155,11 +155,11 @@
     } else if (key === 'hero-bg.webp') {
       svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
         <defs>
-          <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F4F1EC" stop-opacity="0"/><stop offset="40%" stop-color="#EAE5DC"/><stop offset="100%" stop-color="#DFD8CC"/></linearGradient>
+          <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#302D29"/><stop offset="45%" stop-color="#5B544C"/><stop offset="100%" stop-color="#D4CCC0"/></linearGradient>
         </defs>
-        <rect y="300" width="1600" height="600" fill="url(#wall)"/>
-        <rect x="220" y="340" width="260" height="390" fill="#F8F5F0" stroke="#CFC7BA" stroke-width="2"/>
-        <rect x="1120" y="340" width="260" height="390" fill="#F8F5F0" stroke="#CFC7BA" stroke-width="2"/>
+        <rect width="1600" height="900" fill="url(#wall)"/>
+        <rect x="220" y="340" width="260" height="390" fill="#F8F5F0" stroke="#CFC7BA" stroke-width="2" opacity="0.85"/>
+        <rect x="1120" y="340" width="260" height="390" fill="#F8F5F0" stroke="#CFC7BA" stroke-width="2" opacity="0.85"/>
         <line x1="350" y1="340" x2="350" y2="730" stroke="#CFC7BA" stroke-width="1.5"/>
         <line x1="1250" y1="340" x2="1250" y2="730" stroke="#CFC7BA" stroke-width="1.5"/>
         <rect y="730" width="1600" height="170" fill="#D4CCC0"/>
@@ -304,7 +304,7 @@
   let isAnimatingFlip = false;
 
   /* ------------------------------------------------------------------------
-     5. RENDER FEATURED STACK CARDS & CATALOG
+     5. FEATURED STACK & DYNAMIC BENTO CATALOG
      ------------------------------------------------------------------------ */
   function renderFeaturedStack() {
     stackDeckEl.innerHTML = '';
@@ -366,11 +366,41 @@
     });
   }
 
+  function getCatalogSpans(count) {
+    switch (count) {
+      case 1: return [6];
+      case 2: return [3, 3];
+      case 3: return [2, 2, 2];
+      case 4: return [4, 2, 2, 4];
+      case 5: return [4, 2, 2, 2, 2];
+      case 6: return [4, 2, 3, 3, 2, 4];
+      case 7: return [4, 2, 2, 2, 2, 3, 3];
+      default: {
+        const spans = [];
+        let rem = count;
+        let flip = false;
+        while (rem > 0) {
+          if (rem === 1) { spans.push(6); rem -= 1; }
+          else if (rem === 2) { spans.push(3, 3); rem -= 2; }
+          else if (rem === 4) { spans.push(4, 2, 2, 4); rem -= 4; }
+          else {
+            if (flip) spans.push(4, 2);
+            else spans.push(2, 2, 2);
+            rem -= flip ? 2 : 3;
+            flip = !flip;
+          }
+        }
+        return spans;
+      }
+    }
+  }
+
   function renderCatalogGrid() {
     const filtered = activeFilter === 'All'
       ? PROJECTS
       : PROJECTS.filter((p) => p.classifications.includes(activeFilter));
 
+    const spans = getCatalogSpans(filtered.length);
     catalogCountEl.textContent = `${String(filtered.length).padStart(2, '0')} Project${filtered.length === 1 ? '' : 's'}`;
     catalogGridEl.innerHTML = '';
 
@@ -378,6 +408,11 @@
       const card = document.createElement('article');
       card.className = 'catalog-card';
       card.dataset.projectId = project.id;
+      card.style.setProperty('--catalog-span', String(spans[idx] || 2));
+      if (filtered.length % 2 === 1 && idx === 0) {
+        card.dataset.tabletWide = 'true';
+      }
+
       card.innerHTML = `
         <div class="catalog-card__media">
           <img alt="${project.title}" />
@@ -406,7 +441,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     6. MOTION ENGINE: 3-PLANE HERO PARALLAX & SCROLL-DRIVEN STACKING
+     6. MOTION ENGINE: SUBTLE OPTICAL HERO PARALLAX & STACKING
      ------------------------------------------------------------------------ */
   const heroBgLayer = document.querySelector('[data-parallax-layer="bg"]');
   const heroMidLayer = document.querySelector('[data-parallax-layer="mid"]');
@@ -414,9 +449,9 @@
 
   const pointerTarget = { x: 0, y: 0 };
   const layerState = {
-    bg:  { x: 0, y: 0, damp: 0.045, ampX: 12, ampY: 8,  scale: 1.04 },
-    mid: { x: 0, y: 0, damp: 0.065, ampX: 26, ampY: 16, scale: 1.06 },
-    fg:  { x: 0, y: 0, damp: 0.085, ampX: 44, ampY: 24, scale: 1.08 }
+    bg:  { x: 0, y: 0, damp: 0.04,  ampX: 5,  ampY: 2.5, scale: 1.015 },
+    mid: { x: 0, y: 0, damp: 0.05,  ampX: 9,  ampY: 4,   scale: 1.02 },
+    fg:  { x: 0, y: 0, damp: 0.06,  ampX: 13, ampY: 5,   scale: 1.025 }
   };
 
   if (!isTouchDevice && !reducedMotion) {
@@ -439,9 +474,9 @@
 
     if (isTouchDevice) {
       const progress = Math.min(Math.max(scrollY / window.innerHeight, 0), 1.2);
-      heroBgLayer.style.transform  = `translate3d(0, ${(-20 * progress).toFixed(2)}px, 0) scale(1.03)`;
-      heroMidLayer.style.transform = `translate3d(0, ${(-45 * progress).toFixed(2)}px, 0) scale(1.05)`;
-      heroFgLayer.style.transform  = `translate3d(0, ${(-75 * progress).toFixed(2)}px, 0) scale(1.07)`;
+      heroBgLayer.style.transform  = `translate3d(0, ${(-8 * progress).toFixed(2)}px, 0) scale(1.015)`;
+      heroMidLayer.style.transform = `translate3d(0, ${(-14 * progress).toFixed(2)}px, 0) scale(1.02)`;
+      heroFgLayer.style.transform  = `translate3d(0, ${(-20 * progress).toFixed(2)}px, 0) scale(1.025)`;
       return;
     }
 
@@ -517,14 +552,13 @@
   }
 
   /* ------------------------------------------------------------------------
-     7. ZERO-DISTORTION GPU FLIP SHARED-ELEMENT ENGINE
+     7. ZERO-DISTORTION GPU FLIP & DYNAMIC BENTO PROJECT GALLERY
      ------------------------------------------------------------------------ */
   function easeOutQuart(t) {
     return 1 - Math.pow(1 - t, 4);
   }
 
-  function animateFlipFlight({ fromRect, toRect, imgSrc, duration = 620, startRadius = 12, endRadius = 2, onMidpoint, onComplete }) {
-    // Static container set ONCE at destination rect; GPU transform handles 100% of motion
+  function animateFlipFlight({ fromRect, toRect, imgSrc, duration = 620, startRadius = 12, endRadius = 8, onMidpoint, onComplete }) {
     flipProxy.style.left = `${toRect.left}px`;
     flipProxy.style.top = `${toRect.top}px`;
     flipProxy.style.width = `${toRect.width}px`;
@@ -550,7 +584,6 @@
       const dx = curX - toRect.left;
       const dy = curY - toRect.top;
 
-      // Counter-scale inner image so aspect ratio stays 1:1 unstretched while filling cover
       const coverScale = Math.max(boxSx, boxSy);
       const imgSx = coverScale / boxSx;
       const imgSy = coverScale / boxSy;
@@ -574,6 +607,55 @@
     requestAnimationFrame(step);
   }
 
+  function getGalleryBentoLayout(count) {
+    const presets = {
+      1: [{ col: 12, row: 2, mob: 2 }],
+      2: [{ col: 7, row: 2, mob: 1 }, { col: 5, row: 2, mob: 1 }],
+      3: [{ col: 7, row: 2, mob: 2 }, { col: 5, row: 1, mob: 1 }, { col: 5, row: 1, mob: 1 }],
+      4: [
+        { col: 7, row: 2, mob: 2 },
+        { col: 5, row: 1, mob: 1 },
+        { col: 5, row: 1, mob: 1 },
+        { col: 12, row: 2, mob: 2 }
+      ],
+      5: [
+        { col: 8, row: 2, mob: 2 },
+        { col: 4, row: 1, mob: 1 },
+        { col: 4, row: 1, mob: 1 },
+        { col: 5, row: 2, mob: 1 },
+        { col: 7, row: 2, mob: 1 }
+      ],
+      6: [
+        { col: 7, row: 2, mob: 2 },
+        { col: 5, row: 1, mob: 1 },
+        { col: 5, row: 1, mob: 1 },
+        { col: 4, row: 2, mob: 1 },
+        { col: 8, row: 1, mob: 1 },
+        { col: 8, row: 1, mob: 2 }
+      ]
+    };
+
+    if (presets[count]) return presets[count];
+
+    const layout = [];
+    let rem = count;
+    let alternate = false;
+    while (rem > 0) {
+      if (rem <= 6) {
+        layout.push(...presets[rem]);
+        break;
+      }
+      if (alternate) {
+        layout.push({ col: 4, row: 2, mob: 1 }, { col: 8, row: 1, mob: 1 }, { col: 8, row: 1, mob: 2 });
+      } else {
+        layout.push({ col: 7, row: 2, mob: 2 }, { col: 5, row: 1, mob: 1 }, { col: 5, row: 1, mob: 1 });
+      }
+      rem -= 3;
+      alternate = !alternate;
+    }
+    return layout;
+  }
+
   function populateDetailView(project) {
     activeProject = project;
     document.getElementById('detail-bar-title').textContent = `${project.title} — ${project.location}`;
@@ -592,12 +674,16 @@
     const galleryEl = document.getElementById('detail-gallery');
     galleryEl.innerHTML = '';
     const remaining = project.gallery.slice(1);
-    const pattern = ['wide', '7', '5', 'center', '6', '6'];
+    const bentoLayout = getGalleryBentoLayout(remaining.length);
 
     remaining.forEach((filename, idx) => {
-      const layout = pattern[idx % pattern.length];
+      const slot = bentoLayout[idx];
       const fig = document.createElement('figure');
-      fig.className = `gallery-plate gallery-plate--${layout}`;
+      fig.className = 'gallery-plate';
+      fig.style.setProperty('--bento-col', String(slot.col));
+      fig.style.setProperty('--bento-row', String(slot.row));
+      fig.style.setProperty('--bento-mob-col', String(slot.mob));
+
       const img = document.createElement('img');
       img.alt = `${project.title} Architectural View ${idx + 2}`;
       img.loading = 'lazy';
@@ -638,7 +724,6 @@
 
     const targetRect = detailHeroMedia.getBoundingClientRect();
 
-    // Hide source image immediately during flight so it morphs cleanly from exact place
     sourceMediaEl.style.opacity = '0';
     detailOverlay.classList.add('is-backdrop-visible');
 
@@ -647,8 +732,8 @@
       toRect: targetRect,
       imgSrc: sourceImgSrc,
       duration: 620,
-      startRadius: returnTarget === 'main' ? 12 : 4,
-      endRadius: 2,
+      startRadius: returnTarget === 'main' ? 12 : 8,
+      endRadius: 8,
       onMidpoint: () => {
         detailOverlay.classList.add('is-content-visible');
       },
@@ -670,7 +755,6 @@
       detailOverlay.scrollTop = 0;
       const startRect = detailHeroMedia.getBoundingClientRect();
 
-      // Match origin card even if user clicked "Next Project" inside detail view
       let targetMediaEl = activeOriginMediaEl;
       if (activeProject) {
         const container = detailReturnTarget === 'catalog' ? catalogGridEl : stackDeckEl;
@@ -701,8 +785,8 @@
           toRect: endRect,
           imgSrc: detailHeroImg.src,
           duration: 540,
-          startRadius: 2,
-          endRadius: detailReturnTarget === 'main' ? 12 : 4,
+          startRadius: 8,
+          endRadius: detailReturnTarget === 'main' ? 12 : 8,
           onComplete: () => {
             targetMediaEl.style.opacity = '';
             flipProxy.style.display = 'none';
@@ -939,7 +1023,7 @@
 
   function initStaticImages() {
     applyResolvedImage(document.getElementById('preloader-logo'), 'logo_env.webp', '', 'light');
-    applyResolvedImage(document.getElementById('header-logo'), 'logo_env.webp', '', 'dark');
+    applyResolvedImage(document.getElementById('header-logo'), 'logo_env.webp', '', 'light');
     applyResolvedImage(document.getElementById('footer-logo'), 'logo_env.webp', '', 'dark');
     applyResolvedImage(document.getElementById('hero-img-bg'), 'hero-bg.webp');
     applyResolvedImage(document.getElementById('hero-img-mid'), 'hero-mid.webp');

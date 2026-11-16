@@ -3,33 +3,42 @@
    ========================================================================== */
 
 :root {
+  /* Surfaces */
   --canvas-primary: #F4F1EC;
   --surface-elevated: #FAF8F5;
   --surface-recessed: #EAE5DC;
   --surface-obsidian: #161513;
 
+  /* Ink */
   --ink-primary: #171614;
   --ink-secondary: #57534E;
   --ink-muted: #8A837A;
   --ink-inverse: #F4F1EC;
 
+  /* Borders & Accents */
   --border-hairline: #DDD6CA;
   --border-focus: #171614;
   --accent-brass: #9E7B56;
   --status-error: #B44332;
   --status-success: #3E5C48;
 
+  /* Typography */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Instrument Serif', Georgia, serif;
 
+  /* Easing Curves */
   --ease-architectural: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
 
+  /* Layout Bounds */
   --container-max: 1440px;
   --gutter: clamp(20px, 4vw, 64px);
   --header-height: 76px;
 }
 
+/* ==========================================================================
+   BASE RESET & LENIS INTEGRATION
+   ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -55,7 +64,7 @@ body {
   color: var(--ink-primary);
   font-family: var(--font-sans);
   line-height: 1.5;
-  overflow-x: clip;
+  overflow-x: clip; /* Preserves position: sticky inside Lenis */
 }
 
 body.is-loading,
@@ -100,7 +109,7 @@ textarea:focus-visible {
 }
 
 /* ==========================================================================
-   STAGE 1: PRELOADER (INDEPENDENT MONOGRAM, NO BOX BORDER)
+   STAGE 1: ARCHITECTURAL CURTAIN PRELOADER
    ========================================================================== */
 .preloader {
   position: fixed;
@@ -190,7 +199,7 @@ textarea:focus-visible {
 .preloader__percent { color: var(--ink-inverse); }
 
 /* ==========================================================================
-   HEADER (INDEPENDENT MONOGRAM, NO BOX BORDER)
+   HEADER (INDEPENDENT MONOGRAM, CONTRAST-ADAPTIVE NAV)
    ========================================================================== */
 .site-header {
   position: fixed;
@@ -230,10 +239,15 @@ textarea:focus-visible {
 }
 
 .site-header__logo {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   aspect-ratio: 1 / 1;
   object-fit: contain;
+  transition: filter 280ms var(--ease-architectural);
+}
+
+.site-header:not(.is-scrolled) .site-header__logo {
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
 }
 
 .site-header__nav {
@@ -247,9 +261,11 @@ textarea:focus-visible {
   font-size: clamp(13px, 0.95vw, 14px);
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--ink-secondary);
+  color: #FFFFFF;
+  opacity: 0.88;
   padding-block: 6px;
-  transition: color 260ms var(--ease-architectural);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
+  transition: color 280ms var(--ease-architectural), opacity 260ms var(--ease-architectural);
 }
 
 .nav-link::after {
@@ -259,14 +275,30 @@ textarea:focus-visible {
   right: 0;
   bottom: 0;
   height: 1px;
-  background-color: var(--ink-primary);
+  background-color: #FFFFFF;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 320ms var(--ease-architectural);
+  transition: transform 320ms var(--ease-architectural), background-color 280ms var(--ease-architectural);
 }
 
-.nav-link:hover { color: var(--ink-primary); }
-.nav-link:hover::after { transform: scaleX(1); }
+.site-header.is-scrolled .nav-link {
+  color: var(--ink-primary);
+  opacity: 0.78;
+  text-shadow: none;
+}
+
+.site-header.is-scrolled .nav-link::after {
+  background-color: var(--ink-primary);
+}
+
+.nav-link:hover,
+.site-header.is-scrolled .nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
 
 /* ==========================================================================
    MAIN STAGE FADE WRAPPER
@@ -283,7 +315,7 @@ body.is-overlay-open .site-footer {
 }
 
 /* ==========================================================================
-   HERO SECTION (3-LAYER INVERSE PARALLAX)
+   HERO SECTION (3-LAYER INVERSE PARALLAX & SUBTLE DARK SCRIM)
    ========================================================================== */
 .hero {
   position: relative;
@@ -298,6 +330,22 @@ body.is-overlay-open .site-footer {
   background: linear-gradient(180deg, #F4F1EC 0%, #EFEAE2 58%, #E6DFD4 100%);
 }
 
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 52%;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 13, 12, 0.56) 0%,
+    rgba(14, 13, 12, 0.38) 42%,
+    rgba(14, 13, 12, 0.14) 74%,
+    rgba(14, 13, 12, 0) 100%
+  );
+}
+
 .hero__copy {
   position: relative;
   z-index: 15;
@@ -310,7 +358,8 @@ body.is-overlay-open .site-footer {
   font-size: clamp(10.5px, 0.8vw, 12px);
   font-weight: 500;
   letter-spacing: 0.14em;
-  color: var(--ink-muted);
+  color: rgba(255, 255, 255, 0.84);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.38);
   margin-bottom: 14px;
   opacity: 0;
   transform: translate3d(0, 24px, 0);
@@ -322,7 +371,8 @@ body.is-overlay-open .site-footer {
   font-weight: 400;
   line-height: 1.04;
   letter-spacing: -0.03em;
-  color: var(--ink-primary);
+  color: #FFFFFF;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
   margin-bottom: 16px;
   opacity: 0;
   transform: translate3d(0, 28px, 0);
@@ -334,7 +384,8 @@ body.is-overlay-open .site-footer {
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: -0.005em;
-  color: var(--ink-secondary);
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.38);
   max-width: 52ch;
   margin-inline: auto;
   opacity: 0;
@@ -380,47 +431,8 @@ body.is-ready .hero__layer { opacity: 1; }
 .hero__layer--mid { z-index: 2; }
 .hero__layer--fg { z-index: 3; }
 
-.hero__scroll-cue {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translate3d(-50%, 0, 0);
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  opacity: 0;
-  transition: opacity 700ms var(--ease-architectural) 450ms;
-}
-
-body.is-ready .hero__scroll-cue { opacity: 1; }
-
-.hero__scroll-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-secondary);
-}
-
-.hero__scroll-line {
-  width: 1px;
-  height: 22px;
-  background-color: var(--ink-primary);
-  opacity: 0.45;
-  transform-origin: top center;
-  animation: scrollDrop 2.2s var(--ease-architectural) infinite;
-}
-
-@keyframes scrollDrop {
-  0% { transform: scaleY(0); opacity: 0; }
-  45% { transform: scaleY(1); opacity: 0.55; }
-  100% { transform: scaleY(0); transform-origin: bottom center; opacity: 0; }
-}
-
 /* ==========================================================================
-   BUTTONS
+   BUTTONS & LINKS
    ========================================================================== */
 .btn-outline {
   display: inline-flex;
@@ -998,7 +1010,7 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 }
 
 /* ==========================================================================
-   OVERLAY VIEWS & GPU FLIP PROXY
+   OVERLAY VIEWS, BENTO CATALOG & BENTO PROJECT DETAIL (GPU FLIP)
    ========================================================================== */
 .overlay-view {
   position: fixed;
@@ -1025,7 +1037,6 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
   pointer-events: auto;
 }
 
-/* Detail overlay uses an instant display layer + separate backdrop opacity */
 .overlay-detail {
   z-index: 500;
   background-color: transparent;
@@ -1124,7 +1135,7 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
   will-change: transform;
 }
 
-/* Catalog Overlay */
+/* Catalog Overlay — Dynamic 6-Column Bento Grid */
 .catalog-body { padding-block: 48px 96px; }
 .catalog-header { margin-bottom: 28px; }
 .catalog-heading { font-size: clamp(32px, 3.6vw, 56px); font-weight: 400; letter-spacing: -0.025em; }
@@ -1160,15 +1171,16 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 44px 24px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 36px 20px;
 }
 
 .catalog-card {
+  grid-column: span var(--catalog-span, 2);
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   opacity: 0;
   transform: translate3d(0, 16px, 0) scale(0.98);
   transition: opacity 420ms var(--ease-architectural), transform 420ms var(--ease-architectural);
@@ -1177,8 +1189,9 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 .catalog-card.is-visible { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 
 .catalog-card__media {
-  aspect-ratio: 4 / 3;
-  border-radius: 4px;
+  width: 100%;
+  height: clamp(250px, 23vw, 330px);
+  border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--border-hairline);
   background-color: var(--surface-recessed);
@@ -1197,13 +1210,13 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 .catalog-card__area { font-size: 12px; font-weight: 500; color: var(--ink-muted); white-space: nowrap; }
 .catalog-card__sub { font-size: 13px; color: var(--ink-secondary); }
 
-/* Detail View */
-.detail-body { padding-block: 28px 96px; }
+/* Detail View & Dynamic 12-Column Bento Gallery */
+.detail-body { padding-block: 24px 80px; }
 
 .detail-hero-media {
   width: 100%;
-  height: min(68vh, 640px);
-  border-radius: 2px;
+  height: min(64vh, 600px);
+  border-radius: 8px;
   overflow: hidden;
   background-color: var(--surface-recessed);
 }
@@ -1226,10 +1239,10 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 }
 
 .detail-header {
-  padding-block: 44px 36px;
+  padding-block: 36px 28px;
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 32px;
+  gap: 28px;
   align-items: end;
   border-bottom: 1px solid var(--border-hairline);
 }
@@ -1242,10 +1255,10 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 .detail-specs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  padding-block: 28px;
+  gap: 20px;
+  padding-block: 24px;
   border-bottom: 1px solid var(--border-hairline);
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .spec-item dt { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 6px; }
@@ -1254,24 +1267,31 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 .detail-gallery {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
-  margin-bottom: 64px;
+  grid-auto-rows: clamp(190px, 21vw, 275px);
+  grid-auto-flow: dense;
+  gap: 16px;
+  margin-bottom: 56px;
 }
 
 .gallery-plate {
-  border-radius: 2px;
+  grid-column: span var(--bento-col, 6);
+  grid-row: span var(--bento-row, 1);
+  border-radius: 8px;
   overflow: hidden;
   border: 1px solid var(--border-hairline);
   background-color: var(--surface-recessed);
 }
 
-.gallery-plate img { width: 100%; height: 100%; object-fit: cover; }
+.gallery-plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms var(--ease-architectural);
+}
 
-.gallery-plate--wide { grid-column: span 12; aspect-ratio: 16 / 9; }
-.gallery-plate--7 { grid-column: span 7; aspect-ratio: 4 / 3; }
-.gallery-plate--5 { grid-column: span 5; aspect-ratio: 4 / 5; }
-.gallery-plate--6 { grid-column: span 6; aspect-ratio: 4 / 3; }
-.gallery-plate--center { grid-column: 2 / span 10; aspect-ratio: 16 / 10; }
+.gallery-plate:hover img {
+  transform: scale(1.03);
+}
 
 .detail-footer {
   display: flex;
@@ -1285,7 +1305,11 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
    RESPONSIVE RULES
    ========================================================================== */
 @media (max-width: 1199px) {
-  .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+  .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 28px 18px; }
+  .catalog-card { grid-column: span 1; }
+  .catalog-card[data-tablet-wide="true"] { grid-column: span 2; }
+  .catalog-card__media { height: clamp(230px, 30vw, 310px); }
+  .detail-gallery { grid-auto-rows: clamp(150px, 19vw, 220px); gap: 14px; }
   .footer-main { grid-template-columns: 1fr; }
   .detail-header { grid-template-columns: 1fr; }
   .detail-specs { grid-template-columns: repeat(2, 1fr); }
@@ -1300,9 +1324,10 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
 
 @media (max-width: 767px) {
   :root { --header-height: 64px; }
-  .site-header__logo { width: 34px; height: 34px; }
+  .site-header__logo { width: 36px; height: 36px; }
   .site-header__nav { gap: 20px; }
   .hero { min-height: 92svh; }
+  .hero::before { height: 58%; }
   .featured-runway { height: 280vh; }
   .stack-deck { height: min(74svh, 580px); }
 
@@ -1331,16 +1356,24 @@ body.is-ready .hero__scroll-cue { opacity: 1; }
   }
   .filter-bar::-webkit-scrollbar { display: none; }
 
-  .catalog-grid { grid-template-columns: 1fr; gap: 32px; }
-  .detail-hero-media { height: 44svh; }
+  .catalog-grid { grid-template-columns: 1fr; gap: 28px; }
+  .catalog-card,
+  .catalog-card[data-tablet-wide="true"] { grid-column: span 1; }
+  .catalog-card__media { height: auto; aspect-ratio: 4 / 3; }
 
-  .gallery-plate--wide,
-  .gallery-plate--7,
-  .gallery-plate--5,
-  .gallery-plate--6,
-  .gallery-plate--center {
-    grid-column: span 12;
-    aspect-ratio: 4 / 3;
+  .detail-hero-media { height: 42svh; border-radius: 6px; }
+
+  .detail-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 185px;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .gallery-plate {
+    grid-column: span var(--bento-mob-col, 2);
+    grid-row: span 1;
+    border-radius: 6px;
   }
 
   .esc-kbd,
